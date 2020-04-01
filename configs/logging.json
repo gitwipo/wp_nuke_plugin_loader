@@ -1,0 +1,39 @@
+{
+    "logging": {
+        "version": 1,
+        "disable_existing_loggers": true,
+        "formatters": {
+            "brief": {
+                "class": "logging.Formatter",
+                "format": "%(levelname)-7s > %(message)s"
+            },
+            "verbose": {
+                "class": "logging.Formatter",
+                "format": "[%(asctime)s|%(name)s.%(funcName)-20s|%(lineno)3s] > %(levelname)-7s > %(message)s"
+            }
+        },
+        "handlers": {
+            "console": {
+                "level": "DEBUG",
+                "class": "logging.StreamHandler",
+                "formatter": "verbose",
+                "stream": "ext://sys.stdout"
+            },
+            "file_handler": {
+                "level": "DEBUG",
+                "class": "logging.handlers.WatchedFileHandler",
+                "formatter": "verbose",
+                "filename": "/tmp/nuke_wp_plugin_manager.log",
+                "mode": "a",
+                "encoding": "utf-8"
+            }
+        },
+        "loggers": {},
+        "root": {
+            "handlers": [
+                "console"
+            ],
+            "level": "DEBUG"
+        }
+    }
+}

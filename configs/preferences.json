@@ -1,0 +1,34 @@
+{
+    "PLUGINS_PATH": {
+        "linux": "${HOME}/.nuke/plugins",
+        "darwin": "${HOME}/.nuke/plugins",
+        "win": "${USERPROFILE}/.nuke/plugins"
+    },
+    "PYTHON_PATH": {
+        "linux": "${HOME}/.nuke/python",
+        "darwin": "${HOME}/.nuke/python",
+        "win": "${USERPROFILE}/.nuke/python"
+    },
+    "INCLUDES": [
+        "*.nk",
+        "*.gizmo",
+        "*.py"
+    ],
+    "EXCLUDES": [
+        ".DS_Store",
+        ".thumbs",
+        "_*",
+        ".*",
+        "test"
+    ],
+    "SPECIAL_FILES": [
+        "init.py",
+        "menu.py",
+        "__init__.py",
+        "ignore"
+    ],
+    "MENU": {
+        "nuke": "user_plugins",
+        "toolbar": "user_plugins"
+    }
+}

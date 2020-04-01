@@ -1,0 +1,7 @@
+i*.pyc
+*~
+idea/
+.vscode/
+_tmp_tests/
+configs/plugins.json
+configs/plugin_overrides.json
