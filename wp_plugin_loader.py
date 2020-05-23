@@ -211,6 +211,8 @@ class LoadPlugins(object):
             if self.re_excludes.match(mod):
                 continue
             mod_path = _convert2slash(os.path.join(self.python_path, mod))
+            if not os.path.isdir(mod_path):
+                continue
             nuke.pluginAddPath(mod_path)
             self.logger.info("Added python path: {0}".format(mod_path))
         self.logger.info(
@@ -228,6 +230,8 @@ class LoadPlugins(object):
             if key is None or key is u"":
                 continue
             tool_path = self.plugins_path + "/" + key
+            if not os.path.isdir(tool_path):
+                continue
             nuke.pluginAddPath(tool_path)
             self.logger.info("Added tool path: {0}".format(tool_path))
         self.logger.info(
@@ -279,6 +283,7 @@ class LoadPlugins(object):
 
 
 if __name__ == "__main__":
+    # The following code is for testing outside the normal setup
     import codecs
     import logging.config
 
