@@ -48,3 +48,4 @@ logging.config.dictConfig(config["logging"])
 
 # Run
 loader = wp_plugin_loader.LoadPlugins()
+loader.create_tools_entry()

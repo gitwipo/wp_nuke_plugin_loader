@@ -26,6 +26,7 @@ Load nuke plugins:
 - Python tools and panels
 - OFX tools
 
+:TODO:
 Manage plugins:
 - Disable
 - Menu path
@@ -183,9 +184,9 @@ class LoadPlugins(object):
         """
         # Nuke menu and toolbar
         menubar = nuke.menu("Nuke")
-        self.usermenu = menubar.addMenu("&{0}".format(self.preferences["MENU"]["Nuke"]))
+        self.usermenu = menubar.addMenu("&{0}".format(self.preferences["MENU"]["nuke"]))
         toolbar = nuke.toolbar("Nodes")
-        self.usertools = toolbar.addMenu(self.preferences["MENU"]["Nodes"])
+        self.usertools = toolbar.addMenu(self.preferences["MENU"]["nodes"])
 
     @staticmethod
     def _add_gizmo_cmd(sub_menu, tool, tool_label):
@@ -196,8 +197,8 @@ class LoadPlugins(object):
         tool_command = "/".join([self.plugins_path, key, tool])
         sub_menu.addCommand(tool_label, "nuke.loadToolset('{}')".format(tool_command))
 
-    def _add_py_cmd(self, key, tool):
-        tool_path = _convert2slash(os.path.join(self.plugins_path, key, tool))
+    def _add_py_cmd(self, key, tool, tool_path):
+        self.logger.debug("Not loaded python tool: {0}".format(tool_path))
 
     def add_python_paths(self):
         """
@@ -238,15 +239,12 @@ class LoadPlugins(object):
         Create the menu items for the found plugins in the file system 
         and based on the settings in the preferences.
         """
+        self._set_menus()
         categories = sorted([key for key in self.tools_dict])
 
         self.logger.info("Loading tools from: {0}".format(self.plugins_path))
 
         for key in categories:
-
-            # Create sub menu for each category
-            sub_menu = self.usermenu.addMenu(key, key)
-            sub_tools = self.usertools.addMenu(key, key)
 
             for tool in self.tools_dict[key]:
                 self.logger.info("Adding: {0} > {1}".format(key, tool))
@@ -255,13 +253,27 @@ class LoadPlugins(object):
 
                 # Create command entry for the gizmo
                 if tool.endswith(".gizmo"):
+                    sub_menu = self.usermenu.addMenu(key, key)
+                    sub_tools = self.usertools.addMenu(key, key)
                     self._add_gizmo_cmd(sub_menu, tool, tool_label)
                     self._add_gizmo_cmd(sub_tools, tool, tool_label)
 
                 # Create command entry for the nk templates
                 elif tool.endswith(".nk"):
+                    sub_menu = self.usermenu.addMenu(key, key)
+                    sub_tools = self.usertools.addMenu(key, key)
                     self._add_nk_cmd(sub_menu, key, tool, tool_label)
                     self._add_nk_cmd(sub_tools, key, tool, tool_label)
+
+                elif tool.endswith(".py"):
+                    tool_path = _convert2slash(
+                        os.path.join(self.plugins_path, key, tool)
+                    )
+                    if tool in ["init.py", "menu.py"]:
+                        continue
+                    if tool_path not in self.plugin_overrides:
+                        continue
+                    self._add_py_cmd(key, tool, tool_path)
 
         self.logger.info("Finished loading tools from: {0}\n".format(self.plugins_path))
 
