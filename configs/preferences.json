@@ -29,6 +29,6 @@
     ],
     "MENU": {
         "nuke": "user_plugins",
-        "toolbar": "user_plugins"
+        "nodes": "user_plugins"
     }
 }
