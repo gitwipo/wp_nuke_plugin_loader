@@ -13,7 +13,13 @@
             }
         },
         "handlers": {
-            "console": {
+            "console_brief": {
+                "level": "DEBUG",
+                "class": "logging.StreamHandler",
+                "formatter": "brief",
+                "stream": "ext://sys.stdout"
+            },
+            "console_verbose": {
                 "level": "DEBUG",
                 "class": "logging.StreamHandler",
                 "formatter": "verbose",
@@ -31,7 +37,7 @@
         "loggers": {},
         "root": {
             "handlers": [
-                "console"
+                "console_brief"
             ],
             "level": "INFO"
         }
