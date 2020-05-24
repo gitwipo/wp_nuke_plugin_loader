@@ -81,6 +81,7 @@ class LoadPlugins(object):
         self.logger.info("Init nuke plugin loader.")
 
         # Check if pref given otherwise load the default it from the default location
+        self.plugin_overrides = None
         if config_root is not None and os.path.isdir(config_root):
             self.preferences = self._load_configs(
                 os.path.join(config_root, PREFS_CONFIG_NAME)
@@ -275,7 +276,7 @@ class LoadPlugins(object):
                     )
                     if tool in ["init.py", "menu.py"]:
                         continue
-                    if tool_path not in self.plugin_overrides:
+                    if self.plugin_overrides and tool_path not in self.plugin_overrides:
                         continue
                     self._add_py_cmd(key, tool, tool_path)
 
