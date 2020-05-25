@@ -12,7 +12,8 @@
     "INCLUDES": [
         "*.nk",
         "*.gizmo",
-        "*.py"
+        "*.py",
+        "*.tcl"
     ],
     "EXCLUDES": [
         ".DS_Store",
